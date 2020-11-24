@@ -18,8 +18,13 @@ Min Windowsmaskin startar ibland en massa andra SQL-servrar trots att jag stäng
 Skapa databasen i tableplus, phpmyAdmin eller direkt i terminalen. Du kan om du vill använda min dump `bookshop.sql'.
 
 #Anslut till databasen från java    
-`Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookshop? allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",user,password);`
+    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookshop? allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",user,password);
 
 Observera att du behöver ange din user och ditt password i anropet!
 
 #Skapa ett statement och gör din SQL-fråga
+    Statement stmt = conn.createStatement();
+    String SQLquery = "SELECT * FROM BOOK";
+    ResultSet rset = stmt.executeQuery(strSelect);
+
+#Gör något med resultatet
