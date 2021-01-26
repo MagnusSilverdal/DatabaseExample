@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.sql.*;
+import java.util.Scanner;
 
 /**
  * This is a class
@@ -20,7 +21,7 @@ public class DatabaseIntro {
                             "allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                     "magnus", password);
 
-            // Setup statement
+          // Setup statement
             Statement stmt = conn.createStatement();
 
             // Create query and execute
@@ -35,8 +36,29 @@ public class DatabaseIntro {
                         rset.getString("title") + ", " +
                         rset.getString("author") + ", " +
                         rset.getDouble("price") + ", " +
-                        rset.getInt("quantity"));
+                        rset.getInt("quantity")
+                        );
             }
+
+            // insert
+            Scanner in = new Scanner(System.in);
+            System.out.println("Ange titel:");
+            String title = in.nextLine();
+            System.out.println("Ange författare:");
+            String author = in.nextLine();
+
+            SQLQuery = "INSERT INTO book(title,author) " +
+                    "VALUES ('"+title+"', '"+author+"')";
+            stmt.executeUpdate(SQLQuery);
+
+            System.out.println("Ange pris:");
+            int price = in.nextInt();
+            SQLQuery = "UPDATE INTO book(title,author) " +
+                    "VALUES ('"+title+"', '"+author+"')";
+            stmt.executeUpdate(SQLQuery);
+
+            stmt.close();
+            conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

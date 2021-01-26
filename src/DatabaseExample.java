@@ -1,6 +1,6 @@
 /**
  * This is a class
- * Created 2020-03-10
+ * Created 2021-01-25
  *
  * @author Magnus Silverdal
  */
@@ -22,43 +22,36 @@ public class DatabaseExample {
             Scanner tgb = new Scanner(System.in);
             int currentRoom = 1;
 
-            // Create query and execute
             while (currentRoom != 0) {
+            // Create query and execute
                 String strSelect = "select body from story where id = " + currentRoom;
-                //System.out.println("The SQL statement is: " + strSelect + "\n");
 
                 ResultSet rset = stmt.executeQuery(strSelect);
 
                 // Loop through the result set and print
-                //System.out.println("The records selected are:");
                 while (rset.next()) {
                     String body = rset.getString("body");
                     System.out.println(body);
                 }
 
-                strSelect = "select description, storyLink from links where storyId = " + currentRoom;
-                //System.out.println("The SQL statement is: " + strSelect + "\n");
+                strSelect = "select description, targetId from links where storyId = " + currentRoom;
 
                 rset = stmt.executeQuery(strSelect);
                 ArrayList<Integer> storyLinks = new ArrayList();
 
                 // Loop through the result set and print
-                //System.out.println("The records selected are:");
-                int rowCount = 1;
+                int rowCount = 0;
                 while (rset.next()) {
                     String description = rset.getString("description");
-                    int storyLink = rset.getInt("storyLink");
+                    int storyLink = rset.getInt("targetId");
                     storyLinks.add(storyLink);
-                    System.out.println(rowCount + " " + description);
-                    ++rowCount;
+                    System.out.println(++rowCount + " " + description);
                 }
 
-                if (rowCount == 1) {
+                if (rowCount == 0) {
                     System.out.println("Thanks for playing...");
                     currentRoom = 0;
-
                 } else {
-
                     System.out.println("Make your choice: ");
                     int input = tgb.nextInt();
                     while (input < 1 || input > storyLinks.size()) {
